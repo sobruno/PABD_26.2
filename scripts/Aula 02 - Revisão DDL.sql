@@ -1,4 +1,5 @@
 drop table if exists funcionario cascade;
+drop table if exists departamento cascade;
 
 create table funcionario(
     cpf char(11) primary key,
@@ -20,10 +21,18 @@ create table funcionario(
 create table departamento(
     numero smallint primary key,
     nome varchar(50) unique,
-    cpf_gerente char(11)
+    cpf_gerente char(11),
+    data_ini not null,
+
+    constraint departamento_cpf_gerente_fk
+    foreign key (cpf_gerente)
+    references funcionario(cpf)
+    on delete set null
+    on update cascade
 
 );
 
+/*
 -- Adicionar um novo atributo
 alter table departamento
 add column data_ini date;
@@ -53,11 +62,22 @@ check (sexo in ('m', 'M', 'f', 'F', 'o', 'O'));
 alter table funcionario
 drop constraint if exists funcionario_sexo_check;
 
--- Adicionar chave estrangeira
+-- Adicionar chave estrangeira para supervisor
+alter table funcionario
+add constraint funcionario_cpf_supervisor_fk
+foreign key (cpf_supervisor)
+references funcionario(cpf)
+on delete set null
+on update cascade;
+
+-- Adicionar chave estrangeira para departamento
 alter table funcionario
 add constraint funcionario_num_dep_fk
 foreign key (numero_departamento)
 references departamento(numero)
+
 -- pode ser "no action", "cascade", "set null", "set default", "restrict", 
 on delete no action
 on update cascade;
+*/
+
