@@ -1,21 +1,40 @@
--- inserção
-insert into funcionario values 
-(11122233344, 'João', 'Silva', 'joaoh@tads.ifrn', 'rua 00', '2000', '2000-01-01', 'm', null, null),
-(11122253344, 'Gorji', 'Souza', 'tareco@tads.ifrn', 'rua 00', '2400', '2002-11-05', 'm', null, null);
+/*
+-- Inserir
+insert into funcionario values
+('11122233344', 'Joao', 'Silva', 'joao@tads.ifrn', 'Natal-RN', 9990, '2000-01-01', 'M', null, null),
+('22233344455', 'Joana', 'Sales', 'joana@tads.ifrn', 'Parnamirim-RN', 8990, '2001-11-01', 'M', null, null),
+('33344455566', 'Jose', 'Sousa', 'jose@tads.ifrn', 'Teresina-PI', 7990, '2002-12-01', 'M', null, null);
 
-insert into funcionario(cpf, pnome, unome, email, endereco, salario, data_nasc, sexo) values 
-(77777777777, 'Tica', 'Silva', 'Tiquinha@gmail.com', 'Japi', '2521', '1992-05-16', 'F');
+insert into funcionario(cpf, pnome, unome, email, salario, data_nasc, sexo) values 
+('44455566677', 'Jobson', 'Soares', 'jobson@tads.ifrn', 6990, '2003-03-03', 'M');
 
--- atualização
-update funcionario set sexo='F'  
-where cpf='77777777777'
-returning cpf, pnome, unome, endereco;
+-- Atualizar
+update funcionario 
+set sexo='F'
+where cpf='22233344455'
+returning cpf, pnome, unome, sexo;
 
-update funcionario set sexo='F'  
-where cpf='11122253344'
-returning cpf, pnome, unome, endereco, sexo;
-
--- remoção
-delete from funcionario 
-where pnome LIKE 'Jo%'
+-- Remover
+delete from funcionario
+where cpf='44455566677'
 returning cpf, pnome, unome;
+*/
+
+insert into departamento values
+(1, 'TI', '22233344455', current_date),
+(2, 'Financeiro', '11122233344', current_date - interval '3 days'),
+(3, 'RH', '33344455566', current_date - interval '5 days');
+-- interval: year, month, day
+
+-- O supervisor de toods os funcionario deve ser o cpf='111222233344'
+update funcionario
+set cpf_supervisor='11122233344'
+where cpf  <> '11122233344';
+
+update funcionario
+set numero_departamento = 1
+where cpf in ('11122233344', '22233344455');
+
+update funcionario
+set numero_departamento = 3
+where cpf = '33344455566'
